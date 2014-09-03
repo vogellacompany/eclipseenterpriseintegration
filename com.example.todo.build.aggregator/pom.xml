@@ -30,6 +30,8 @@
 		<module>../com.example.e4.rcp.todo.i18n</module>
 		<module>../com.example.e4.rcp.todo.ownannotation</module>
 		<module>../com.example.e4.rcp.todo.services</module>
+		<module>../com.example.e4.rcp.todo.restservices</module>
+		<module>../com.example.todo.server</module>
 		<module>../com.example.e4.renderer.swt</module>
 
 		<!-- Junit tests -->
@@ -37,6 +39,7 @@
 
 		<!-- features -->
 		<module>../com.example.e4.rcp.todo.feature</module>
+		<module>../com.example.e4.rcp.todo.rest.feature</module>
 
 		<!-- p2 repository for updates -->
 
