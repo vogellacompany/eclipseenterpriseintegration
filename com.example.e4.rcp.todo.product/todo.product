@@ -83,7 +83,7 @@
    </plugins>
 
    <features>
-      <feature id="com.example.e4.rcp.todo.feature"/>
+      <feature id="com.example.e4.rcp.todo.rest.feature"/>
       <feature id="org.eclipse.e4.rcp"/>
       <feature id="org.eclipse.emf.ecore"/>
       <feature id="org.eclipse.emf.common"/>
