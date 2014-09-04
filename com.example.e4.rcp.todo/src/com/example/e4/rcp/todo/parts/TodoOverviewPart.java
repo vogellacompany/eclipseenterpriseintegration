@@ -242,6 +242,16 @@ public class TodoOverviewPart {
 		}
 	}
 
+	@Inject
+	@Optional
+	private void loadingFinished(
+			@UIEventTopic(LOCAL_EVENT_FINISH) List<Todo> todos) {
+		if (viewer != null) {
+			writableList.clear();
+			writableList.addAll(model.getTodos());
+		}
+	}
+
 	@Focus
 	private void setFocus() {
 		btnNewButton.setFocus();
