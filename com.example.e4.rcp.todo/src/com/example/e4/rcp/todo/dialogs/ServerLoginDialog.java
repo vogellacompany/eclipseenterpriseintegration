@@ -1,6 +1,8 @@
 package com.example.e4.rcp.todo.dialogs;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -10,7 +12,6 @@ import org.eclipse.swt.widgets.Text;
 
 public class ServerLoginDialog extends PasswordDialog {
 
-	public static final String SERVER_URI_DEFAULT = "http://localhost:8080/todo";
 	private Text txtServer;
 	private String serverUri;
 
@@ -29,6 +30,14 @@ public class ServerLoginDialog extends PasswordDialog {
 		txtServer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				1, 1));
 		txtServer.setText(getServerUri());
+		txtServer.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Text text = (Text) e.getSource();
+				serverUri = text.getText();
+			}
+		});
 
 		return container;
 	}
