@@ -14,25 +14,34 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.example.e4.rcp.todo.dialogs.PasswordDialog;
+import com.example.e4.rcp.todo.dialogs.ServerLoginDialog;
 
 public class Manager {
+	public static final String NODEPATH = "com.example.e4.rcp.todo";
+	public static final String USER_PREF_KEY = "user";
+	public static final String SERVER_URI_PREF_KEY = "server";
 
+	public static final String SERVER_URI_DEFAULT = "http://localhost:8080/todo";
 	// We add the nodePath in case you move the lifecycle handler to
 	// another plug-in later
 	@Inject
-	@Preference(nodePath = "com.example.e4.rcp.todo", value = "user")
+	@Preference(nodePath = NODEPATH, value = USER_PREF_KEY)
 	private String user;
+
+	@Inject
+	@Preference(nodePath = NODEPATH, value = SERVER_URI_PREF_KEY)
+	private String serverUri;
 
 	@PostContextCreate
 	public void postContextCreate(@Preference IEclipsePreferences prefs,
 			IApplicationContext appContext, Display display) {
 
 		final Shell shell = new Shell(SWT.TOOL | SWT.NO_TRIM);
-		PasswordDialog dialog = new PasswordDialog(shell);
+		ServerLoginDialog dialog = new ServerLoginDialog(shell);
 		if (user != null) {
 			dialog.setUser(user);
 		}
+		dialog.setServerUri(serverUri != null ? serverUri : SERVER_URI_DEFAULT);
 
 		// close the static splash screen
 		appContext.applicationRunning();
@@ -48,7 +57,10 @@ public class Manager {
 			// get the user from the dialog
 			String userValue = dialog.getUser();
 			// store the user values in the preferences
-			prefs.put("user", userValue );
+			prefs.put(USER_PREF_KEY, userValue);
+
+			String dialogsServerUri = dialog.getServerUri();
+			prefs.put(SERVER_URI_PREF_KEY, dialogsServerUri);
 			try {
 				prefs.flush();
 			} catch (BackingStoreException e) {
