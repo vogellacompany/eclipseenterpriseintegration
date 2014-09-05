@@ -9,18 +9,26 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.prefs.BackingStoreException;
 
-import com.example.e4.rcp.todo.dialogs.PasswordDialog;
+import com.example.e4.rcp.todo.dialogs.ServerLoginDialog;
+import com.example.e4.rcp.todo.preferences.PreferenceConstants;
 
 public class EnterCredentialsHandler {
 	
-	@Inject @Preference(value="user") String userPref;
-	@Inject @Preference(value="password") String passwordPref;
+	@Inject
+	@Preference(nodePath = PreferenceConstants.TODO_NODEPATH, value = PreferenceConstants.USER_PREF_KEY)
+	String userPref;
+	@Inject
+	@Preference(nodePath = PreferenceConstants.TODO_NODEPATH, value = PreferenceConstants.PASSWORD_PREF_KEY)
+	String passwordPref;
+	@Inject
+	@Preference(nodePath = PreferenceConstants.TODO_NODEPATH, value = PreferenceConstants.SERVER_URI_PREF_KEY)
+	String serverUri;
 	
 	@Execute
 	public void execute(
 			Shell shell,
 			@Preference IEclipsePreferences prefs) {
-		PasswordDialog dialog = new PasswordDialog(shell);
+		ServerLoginDialog dialog = new ServerLoginDialog(shell);
 		
 		if (userPref!=null) {
 			dialog.setUser(userPref);
@@ -28,6 +36,9 @@ public class EnterCredentialsHandler {
 		
 		if (passwordPref!=null) {
 			dialog.setPassword(passwordPref);
+		}
+		if (serverUri != null) {
+			dialog.setServerUri(serverUri);
 		}
 		
 		// get the new values from the dialog

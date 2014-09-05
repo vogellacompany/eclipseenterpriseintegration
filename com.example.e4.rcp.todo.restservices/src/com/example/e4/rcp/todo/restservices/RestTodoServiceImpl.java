@@ -39,7 +39,8 @@ public class RestTodoServiceImpl implements ITodoService {
 	private IEventBroker broker;
 
 	@Inject
-	public RestTodoServiceImpl(@Preference(nodePath = NODEPATH, value = SERVER_URI_PREF_KEY) String serverUri) {
+	public void setServerUri(
+			@Preference(nodePath = NODEPATH, value = SERVER_URI_PREF_KEY) String serverUri) {
 		if(serverUri != null) {
 			this.serverUri = serverUri;
 		}

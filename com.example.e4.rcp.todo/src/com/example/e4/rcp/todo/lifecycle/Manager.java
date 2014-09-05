@@ -15,21 +15,19 @@ import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.example.e4.rcp.todo.dialogs.ServerLoginDialog;
+import com.example.e4.rcp.todo.preferences.PreferenceConstants;
 
 public class Manager {
-	public static final String NODEPATH = "com.example.e4.rcp.todo";
-	public static final String USER_PREF_KEY = "user";
-	public static final String SERVER_URI_PREF_KEY = "server";
 
 	public static final String SERVER_URI_DEFAULT = "http://localhost:8080/todo";
 	// We add the nodePath in case you move the lifecycle handler to
 	// another plug-in later
 	@Inject
-	@Preference(nodePath = NODEPATH, value = USER_PREF_KEY)
+	@Preference(nodePath = PreferenceConstants.TODO_NODEPATH, value = PreferenceConstants.USER_PREF_KEY)
 	private String user;
 
 	@Inject
-	@Preference(nodePath = NODEPATH, value = SERVER_URI_PREF_KEY)
+	@Preference(nodePath = PreferenceConstants.TODO_NODEPATH, value = PreferenceConstants.SERVER_URI_PREF_KEY)
 	private String serverUri;
 
 	@PostContextCreate
@@ -57,10 +55,10 @@ public class Manager {
 			// get the user from the dialog
 			String userValue = dialog.getUser();
 			// store the user values in the preferences
-			prefs.put(USER_PREF_KEY, userValue);
+			prefs.put(PreferenceConstants.USER_PREF_KEY, userValue);
 
 			String dialogsServerUri = dialog.getServerUri();
-			prefs.put(SERVER_URI_PREF_KEY, dialogsServerUri);
+			prefs.put(PreferenceConstants.SERVER_URI_PREF_KEY, dialogsServerUri);
 			try {
 				prefs.flush();
 			} catch (BackingStoreException e) {
